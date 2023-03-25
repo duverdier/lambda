@@ -1,7 +1,7 @@
 import { Column, Model, Table } from 'sequelize-typescript';
 
-@Table({ tableName: 'Direction' })
-export class Structure extends Model {
+@Table({ tableName: 'Direction', updatedAt: false, createdAt: false })
+export class Structure extends Model<Structure> {
   @Column({
     primaryKey: true,
     autoIncrement: true,

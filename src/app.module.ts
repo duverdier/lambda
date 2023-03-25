@@ -12,6 +12,8 @@ import { planVersionRepository } from './repository/plan-version.repository';
 import { structureRepository } from './repository/structure.repository';
 import { contratRepository } from './repository/contrat.repository';
 import { strategicOrientationRepository } from './repository/strategic-orientation.repository';
+import { StructureService } from './services/structure.service';
+import { StructureController } from './controllers/structure.controller';
 
 @Module({
   imports: [
@@ -27,8 +29,9 @@ import { strategicOrientationRepository } from './repository/strategic-orientati
       }),
     }),
   ],
-  controllers: [LoginController],
+  controllers: [LoginController, StructureController],
   providers: [
+    StructureService,
     ...databaseProviders,
     ...strategicAxeRepository,
     ...strategicObjectiveRepository,

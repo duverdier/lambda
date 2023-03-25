@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
 import * as process from 'process';
+import { Structure } from '../entity/structure.entity';
 
 export const databaseProviders = [
   {
@@ -14,7 +15,7 @@ export const databaseProviders = [
         database: process.env.DB_NAME,
         logging: true,
       });
-      sequelize.addModels([]);
+      sequelize.addModels([Structure]);
       await sequelize.sync();
       return sequelize;
     },
