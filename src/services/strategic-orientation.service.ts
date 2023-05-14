@@ -13,7 +13,6 @@ export class StrategicOrientationService {
 
   async createStrategicOrientation(strategicOrientation: { label: string; objectifStrategiqueId: number }) {
     try {
-      console.log('strategicOrientation: ', strategicOrientation);
       const { label, objectifStrategiqueId } = strategicOrientation;
       const strategicOrientationObject = await this.getStrategicOrientationObject({
         label,

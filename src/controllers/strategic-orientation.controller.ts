@@ -1,0 +1,37 @@
+import { Body, Controller, Post, Get, Param, ParseIntPipe, Put } from '@nestjs/common';
+import { StrategicOrientationService } from '../services';
+import { ApiTags } from '@nestjs/swagger';
+import { StrategicOrientationDto, UpdateStrategicOrientationDto } from 'src/dto/strategic-orientation.dto';
+
+@ApiTags('Strategic Orientation')
+@Controller('strategic-orientations')
+export class StrategicOrientationController {
+  constructor(private readonly strategicOrientationService: StrategicOrientationService) {}
+
+  @Post()
+  async createStrategicOrientation(@Body() strategicOrientationDto: StrategicOrientationDto) {
+    return await this.strategicOrientationService.createStrategicOrientation(strategicOrientationDto);
+  }
+
+  @Get()
+  async getStrategicOrientations() {
+    return await this.strategicOrientationService.getStrategicOrientations();
+  }
+
+  @Get(':id')
+  async getStrategicOrientationById(@Param('id', ParseIntPipe) id: number) {
+    return await this.strategicOrientationService.getStrategicOrientationById(+id);
+  }
+
+  @Put(':id')
+  async updateStrategicOrientation(
+    @Body() updateStrategicOrientationDto: UpdateStrategicOrientationDto,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    const response = await this.strategicOrientationService.updateStrategicOrientation(
+      +id,
+      updateStrategicOrientationDto,
+    );
+    return response;
+  }
+}

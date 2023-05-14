@@ -19,7 +19,6 @@ export class StrategicObjectiveService {
   }) {
     try {
       const { numero, label, axeStrategiqueId } = strategicObjective;
-      console.log('strategicObjective: ', strategicObjective);
       const strategicObjectiveObject = await this.getStrategicObjectiveObject({ numero, label, axeStrategiqueId });
       return await this.strategicObjectiveRepository.create<StrategicObjective>(strategicObjectiveObject);
     } catch (error) {

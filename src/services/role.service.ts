@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { Role } from '../entity/role.entity';
 import { RoleDto } from '../dto/role.dto';
 
@@ -22,5 +22,13 @@ export class RoleService {
       raw: true,
       nest: true,
     });
+  }
+
+  async updateRole(id: number, data: Role) {
+    const role = await this.getRoleById(id);
+    if (!role) {
+      throw new HttpException('ROLE_NOT_FOUND', HttpStatus.NOT_FOUND);
+    }
+    return await this.roleRepository.update(data, { where: { id } });
   }
 }

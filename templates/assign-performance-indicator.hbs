@@ -1,0 +1,49 @@
+<html lang='fr'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <meta http-equiv='X-UA-Compatible' content='ie=edge' />
+    <title>daf expert</title>
+    <style>
+      body {
+        font: normal normal normal 95% Poppins;
+        /* font-family: -apple-system, BlinkMacSystemFont, Poppins, */
+        /* Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; */
+        color: #828282;
+        /* opacity: 1; */
+        margin: "left";
+        padding: 0;
+        margin: 0;
+        padding: 0 0.5rem;
+        height: 100vh;
+        display: flex;
+        background-repeat: "no-repeat";
+        background-size: 100% 100vh;
+      }
+      table {
+        width: 550px;
+        min-width: 300px;
+        margin: auto;
+      }
+      a {
+        color: #008773;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <table width='80%;' cellspacing='0' border='0' role='presentation'>
+      <tr>
+        <td width='80%;' align='center' colspan='2' style='padding-top: 0.5rem; border-radius: 10px;'>
+          <div style='align-items: center; text-align: center; padding-bottom: 7%;'>
+            <div style='margin: 10px 0; font-weight: bold;'>
+              {{{ HEADER }}}
+            </div>
+          </div>
+          <button style="background-color: #f2fef6;border-radius: 10px;border: 1px solid #008773;width: 100%;color: #008773;height: 45px;"><a href="{{{ url }}}";>Cliquez-ici</a></button>
+        </td>
+      </tr>
+      {{{ BODY }}}
+    </table>
+  </body>
+</html>
