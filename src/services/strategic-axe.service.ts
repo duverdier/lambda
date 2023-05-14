@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { StrategicAxe } from '../entity/strategic-axe.entity';
 import sequelize from 'sequelize';
 
@@ -12,7 +12,7 @@ export class StrategicAxeService {
   //   return this.strategicAxeRepository.create<StrategicAxe>(strategicAxe);
   // }
 
-  async createStrategicAxe(strategicAxe: { id: number; label: string }) {
+  async createStrategicAxe(strategicAxe: { label: string; id?: number }) {
     try {
       return await this.strategicAxeRepository.create<StrategicAxe>({ label: strategicAxe.label });
     } catch (error) {
@@ -33,6 +33,10 @@ export class StrategicAxeService {
   }
 
   async updateStrategicAxe(id: number, data: any) {
+    const strategicAxe = await this.getStrategicAxeById(id);
+    if (!strategicAxe) {
+      throw new HttpException('STRATEGIC_AXE_NOT_FOUND', HttpStatus.NOT_FOUND);
+    }
     return await this.strategicAxeRepository.update(data, { where: { id } });
   }
 

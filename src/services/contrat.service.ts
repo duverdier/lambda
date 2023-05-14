@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { Contrat } from '../entity/contrat.entity';
 
 @Injectable()
@@ -8,7 +8,7 @@ export class ContratService {
     private readonly contratRepository: typeof Contrat,
   ) {}
 
-  async createContrat(contrat: { id: number; label: string }) {
+  async createContrat(contrat: { label: string; id?: number }) {
     return await this.contratRepository.create<Contrat>({ label: contrat.label });
   }
 
@@ -25,6 +25,10 @@ export class ContratService {
   }
 
   async updateContrat(id: number, data: any) {
+    const contrat = await this.getContratById(id);
+    if (!contrat) {
+      throw new HttpException('CONTRAT_NOT_FOUND', HttpStatus.NOT_FOUND);
+    }
     return await this.contratRepository.update(data, { where: { id } });
   }
 }

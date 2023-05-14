@@ -11,3 +11,5 @@ export { ContratService } from './contrat.service';
 export { StrategicOrientationService } from './strategic-orientation.service';
 export { PlanVersionService } from './plan-version.service';
 export { IndicateurPSDsService } from './indicateur-PSDs.service';
+export { PlanStrategiqueService } from './plan-strategique.service';
+export { PlanActionService } from './plan-actions.service';

@@ -20,7 +20,7 @@ export const databaseProviders = [
         },
       } as SequelizeOptions);
       sequelize.addModels(Object.values(models));
-      // await sequelize.sync();
+      await sequelize.sync();
       return sequelize;
     },
   },
