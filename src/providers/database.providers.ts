@@ -1,6 +1,6 @@
-import { Sequelize } from 'sequelize-typescript';
-import * as process from 'process';
-import { Structure } from '../entity/structure.entity';
+import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
+import * as models from '../entity';
+import { environmentVariable } from '../config/environment-variable';
 
 export const databaseProviders = [
   {
@@ -8,15 +8,19 @@ export const databaseProviders = [
     useFactory: async () => {
       const sequelize = new Sequelize({
         dialect: 'mssql',
-        host: process.env.DB_HOST,
-        port: +process.env.DB_PORT,
-        username: process.env.DB_USERNAME,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME,
+        host: environmentVariable.DB_HOST,
+        port: environmentVariable.DB_PORT,
+        username: environmentVariable.DB_USERNAME,
+        password: environmentVariable.DB_PASSWORD,
+        database: environmentVariable.DB_NAME,
         logging: true,
-      });
-      sequelize.addModels([Structure]);
-      await sequelize.sync();
+        query: {
+          raw: true, // Activer les résultats bruts
+          nest: true, // Activer le formatage des résultats en objets imbriqués
+        },
+      } as SequelizeOptions);
+      sequelize.addModels(Object.values(models));
+      // await sequelize.sync();
       return sequelize;
     },
   },

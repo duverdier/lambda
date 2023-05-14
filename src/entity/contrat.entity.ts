@@ -1,7 +1,8 @@
-import { Column, Model, Table } from 'sequelize-typescript';
+import { Column, Model, Table, HasOne } from 'sequelize-typescript';
+import { PerformanceIndicator } from './performance-indicator.entity';
 
-@Table({ tableName: 'Contrat' })
-export class Contrat extends Model {
+@Table({ tableName: 'Contrats', updatedAt: false, createdAt: false })
+export class Contrat extends Model<Contrat> {
   @Column({
     primaryKey: true,
     autoIncrement: true,
@@ -9,6 +10,9 @@ export class Contrat extends Model {
   })
   id: number;
 
-  @Column
+  @Column({ field: 'Contrat' })
   label: string;
+
+  @HasOne(() => PerformanceIndicator)
+  performanceIndicators: PerformanceIndicator[];
 }

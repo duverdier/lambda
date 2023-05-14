@@ -1,7 +1,8 @@
-import { Column, Model, Table } from 'sequelize-typescript';
+import { Column, Model, Table, BelongsTo, ForeignKey, DataType } from 'sequelize-typescript';
+import { StrategicObjective } from './strategic-objective.entity';
 
-@Table({ tableName: 'Orientations_Strategiques' })
-export class StrategicOrientation extends Model {
+@Table({ tableName: 'Orientations_Strategiques', updatedAt: false, createdAt: false })
+export class StrategicOrientation extends Model<StrategicOrientation> {
   @Column({
     primaryKey: true,
     autoIncrement: true,
@@ -9,6 +10,13 @@ export class StrategicOrientation extends Model {
   })
   id: number;
 
-  @Column({ field: 'OrientationStrategique' })
+  @Column({ field: 'OrientationStrategique', type: DataType.TEXT })
   label: string;
+
+  @BelongsTo(() => StrategicObjective)
+  strategicObjective: StrategicObjective;
+
+  @ForeignKey(() => StrategicObjective)
+  @Column({ field: 'Id_ObjectifStrategique' })
+  objectifStrategiqueId?: number; // jointure avec strategic-objective
 }
