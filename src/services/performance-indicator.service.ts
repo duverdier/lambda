@@ -1,5 +1,5 @@
 import { Inject, Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { PerformanceIndicator, IndicateurPSDs, Contrat, Structure, OperationalObjective } from '../entity';
+import { PerformanceIndicator, IndicateurPSDs, Contrat, Structure, OperationalObjective, PlanActions } from '../entity';
 import { IndicateurPSDsService } from './indicateur-PSDs.service';
 import { PlanVersionService } from './plan-version.service';
 import { UserService } from './user.service';
@@ -82,7 +82,17 @@ export class PerformanceIndicatorService {
   }
 
   getPerformanceIndicators() {
-    return this.performanceIndicatorRepository.findAll<PerformanceIndicator>();
+    return this.performanceIndicatorRepository.findAll<PerformanceIndicator>({
+      include: [
+        { model: Contrat, required: false },
+        { model: Structure, required: false },
+        { model: OperationalObjective, required: false },
+        { model: PlanActions, required: false },
+        { model: IndicateurPSDs, required: false },
+      ],
+      raw: true,
+      nest: true,
+    });
   }
 
   async getPerformanceIndicatorById(id: number) {
@@ -92,6 +102,8 @@ export class PerformanceIndicatorService {
         { model: Contrat, required: false },
         { model: Structure, required: false },
         { model: OperationalObjective, required: false },
+        { model: PlanActions, required: false },
+        { model: IndicateurPSDs, required: false },
       ],
       raw: true,
       nest: true,

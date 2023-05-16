@@ -2,6 +2,7 @@ import { Body, Controller, Post, Get, ParseIntPipe, Param, Put } from '@nestjs/c
 import { PerformanceIndicatorService } from '../services';
 import { PerformanceIndicatorDto } from '../dto/performance-indicator.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { Public } from '../decorators/public.decorator';
 
 @ApiTags('Performance indicators')
 @Controller('performance-indicators')
@@ -9,23 +10,27 @@ export class PerformanceIndicatorController {
   constructor(private readonly performanceIndicatorService: PerformanceIndicatorService) {}
 
   @Post()
+  @Public()
   async createPerformanceIndicator(@Body() performanceIndicatorDto: PerformanceIndicatorDto) {
     return await this.performanceIndicatorService.createPerformanceIndicator(performanceIndicatorDto);
   }
 
   @Get()
+  @Public()
   async getPerformanceIndicators() {
     const response = await this.performanceIndicatorService.getPerformanceIndicators();
     return response;
   }
 
   @Get(':id')
+  @Public()
   async getPerformanceIndicatorById(@Param('id', ParseIntPipe) id: number) {
     const response = await this.performanceIndicatorService.getPerformanceIndicatorById(+id);
     return response;
   }
 
   @Put(':id')
+  @Public()
   async updatePerformanceIndicator(
     @Body() performanceIndicatorDto: PerformanceIndicatorDto,
     @Param('id', ParseIntPipe) id: number,
@@ -35,6 +40,7 @@ export class PerformanceIndicatorController {
   }
 
   @Put(':id/structure/:structureId/assign')
+  @Public()
   async assignPerformanceIndicatorStructure(
     @Param('id', ParseIntPipe) id: number,
     @Param('structureId', ParseIntPipe) structureId: number,

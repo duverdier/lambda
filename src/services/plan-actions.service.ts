@@ -16,12 +16,17 @@ export class PlanActionService {
   }
 
   getPlanAction() {
-    return this.planActionsRepository.findAll<PlanActions>();
+    return this.planActionsRepository.findAll<PlanActions>({
+      include: [{ model: PerformanceIndicator, required: false }],
+      raw: true,
+      nest: true,
+    });
   }
 
   async getPlanActionById(id: number) {
     return await this.planActionsRepository.findOne<PlanActions>({
       where: { id },
+      include: [{ model: PerformanceIndicator, required: false }],
       raw: true,
       nest: true,
     });

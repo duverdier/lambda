@@ -6,12 +6,15 @@ import { excelFileFilter } from '../utils/upload-file/fileVerified/file-excel-fi
 import { editFileName } from '../utils/upload-file/fileVerified/edit-file-name';
 import { UploadExcelFileService } from '../services';
 import { ApiTags } from '@nestjs/swagger';
+import { Public } from '../decorators/public.decorator';
+import { FileValidationPipe } from '../shared/pipes/file-validation-pipe';
 
 @ApiTags('Import Export')
 @Controller()
 export class UploadExcelFileController {
   constructor(private uploadExcelFileService: UploadExcelFileService) {}
 
+  @Public()
   @Post('/import-file-excel')
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(
@@ -23,10 +26,11 @@ export class UploadExcelFileController {
       fileFilter: excelFileFilter,
     }),
   )
-  async uploadFileExcel(@UploadedFile() file: Express.Multer.File) {
+  async uploadFileExcel(@UploadedFile(new FileValidationPipe()) file: Express.Multer.File) {
     return await this.uploadExcelFileService.uploadFileExcel(file);
   }
 
+  @Public()
   @Get('/export-file-excel')
   async generateExcel(@Res() res) {
     const response = await this.uploadExcelFileService.generateExcel();
