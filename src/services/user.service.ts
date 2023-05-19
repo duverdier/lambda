@@ -47,6 +47,15 @@ export class UserService {
     });
   }
 
+  findByStructureId(structureId: number) {
+    return this.userRepository.findOne<User>({
+      where: { structureId },
+      include: { model: Structure, required: false, include: [{ model: Role, required: false }] },
+      raw: true,
+      nest: true,
+    });
+  }
+
   private async generatePassword() {
     const generatePwd = generatePassword.generate({
       length: 10,

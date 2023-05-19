@@ -4,7 +4,7 @@ import { OperationalObjective } from '../entity/operational-objective.entity';
 @Injectable()
 export class OperationalObjectiveService {
   constructor(
-    @Inject('OPERATIONAl_OBJECTIVE_REPOSITORY')
+    @Inject('OPERATIONAL_OBJECTIVE_REPOSITORY')
     private readonly operationalObjectiveServiceRepository: typeof OperationalObjective,
   ) {}
 
@@ -29,7 +29,15 @@ export class OperationalObjectiveService {
     });
   }
 
-  async updateStrategicOrientation(id: number, data: any) {
+  async getOperationalObjectiveByOrientationStrategiqueId(orientationStrategiqueId: number) {
+    return await this.operationalObjectiveServiceRepository.findAll<OperationalObjective>({
+      where: { orientationStrategiqueId },
+      raw: true,
+      nest: true,
+    });
+  }
+
+  async updateOperationalObjective(id: number, data: any) {
     return await this.operationalObjectiveServiceRepository.update(data, { where: { id } });
   }
 

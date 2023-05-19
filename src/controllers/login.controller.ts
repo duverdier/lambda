@@ -1,10 +1,12 @@
-import { Body, Controller, Post, Put, Get } from '@nestjs/common';
+import { Body, Controller, Post, Put } from '@nestjs/common';
 import { LoginDto } from '../dto/login.dto';
 import { AuthService, StrategicAxeService } from 'src/services';
 import { Public } from '../decorators/public.decorator';
 import { ForgetPasswordDto } from 'src/dto/forget-password.dto';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller()
+@ApiTags('Auth')
+@Controller('auth')
 export class LoginController {
   constructor(private readonly authService: AuthService, private readonly strategicAxeService: StrategicAxeService) {}
 
@@ -18,13 +20,6 @@ export class LoginController {
   @Public()
   async resetPassword(@Body() passwordToReset: ForgetPasswordDto) {
     const response = await this.authService.resetPassword(passwordToReset);
-    return response;
-  }
-
-  @Get('/get-view-axe')
-  @Public()
-  async getViewAxe() {
-    const response = await this.strategicAxeService.getViewAxe();
     return response;
   }
 }

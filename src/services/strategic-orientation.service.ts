@@ -13,7 +13,6 @@ export class StrategicOrientationService {
 
   async createStrategicOrientation(strategicOrientation: { label: string; objectifStrategiqueId: number }) {
     try {
-      console.log('strategicOrientation: ', strategicOrientation);
       const { label, objectifStrategiqueId } = strategicOrientation;
       const strategicOrientationObject = await this.getStrategicOrientationObject({
         label,
@@ -32,6 +31,14 @@ export class StrategicOrientationService {
   async getStrategicOrientationById(id: number) {
     return await this.strategicOrientationRepository.findOne<StrategicOrientation>({
       where: { id },
+      raw: true,
+      nest: true,
+    });
+  }
+
+  async getStrategicOrientationByObjectifStrategiqueId(objectifStrategiqueId: number) {
+    return await this.strategicOrientationRepository.findAll<StrategicOrientation>({
+      where: { objectifStrategiqueId },
       raw: true,
       nest: true,
     });

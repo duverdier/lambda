@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { PlanVersion } from '../entity/plan-version.entity';
 
 @Injectable()
@@ -25,10 +25,19 @@ export class PlanVersionService {
   }
 
   async updatePlanVersion(id: number, data: PlanVersion) {
+    await this.verifyPlanVersion(id);
     return await this.planVersionRepository.update(data, { where: { id } });
   }
 
   async updateDateEndPlanVersion(id: number, dateEnd: string) {
+    await this.verifyPlanVersion(id);
     return await this.planVersionRepository.update({ dateEnd }, { where: { id } });
+  }
+
+  private async verifyPlanVersion(id: number) {
+    const planVersion = await this.getPlanVersionById(id);
+    if (!planVersion) {
+      throw new HttpException('PLAN_ACTION_NOT_FOUND', HttpStatus.NOT_FOUND);
+    }
   }
 }
